@@ -38,6 +38,34 @@
    <!-- Add more startup images as needed -->
 
     <meta name="theme-color" content="#ffffff">
+	<style>
+        #installPrompt {
+            display: none;
+            position: fixed;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            text-align: center;
+        }
+        #installPrompt button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #installPrompt button:hover {
+            background: #0056b3;
+        }
+    </style>
 </head> 
 
 <body class="app app-login p-0">    	
@@ -107,8 +135,50 @@
 	    </div><!--//auth-background-col-->
     
     </div><!--//row-->
+    <div id="installPrompt">
+        <p>Add this app to your home screen for quick access!</p>
+        <button id="addBtn">Add to Home Screen</button>
+    </div>
+    <script>
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const addBtn = document.getElementById('addBtn');
 
+        // Android: Listen for the `beforeinstallprompt` event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e; // Store the event
+            installPrompt.style.display = 'block'; // Show the custom prompt
+        });
 
+        // Handle Add to Home Screen button click
+        addBtn.addEventListener('click', () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt(); // Show the native prompt
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the A2HS prompt');
+                    } else {
+                        console.log('User dismissed the A2HS prompt');
+                    }
+                    deferredPrompt = null; // Clear the deferred prompt
+                });
+            }
+            installPrompt.style.display = 'none'; // Hide the custom prompt
+        });
+
+        // iOS: Detect if the app is running in standalone mode
+        if (window.navigator.standalone === false) {
+            // Show custom instructions for iOS
+            installPrompt.style.display = 'block';
+            addBtn.textContent = 'Learn How'; // Change button text for iOS
+            addBtn.addEventListener('click', () => {
+                alert('To add this app to your home screen, tap the "Share" button and select "Add to Home Screen."');
+            });
+        } else if (window.navigator.standalone === true) {
+            console.log('App is already running in standalone mode.');
+        }
+    </script>
 </body>
 </html> 
 
