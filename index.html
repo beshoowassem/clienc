@@ -20,13 +20,20 @@
 
     <!-- Link to Manifest JSON -->
     <link rel="manifest" href="manifest.json">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <link rel="apple-touch-icon" href="icon512_maskable.png">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="format-detection" content="telephone=no">
-	<meta name = "viewport" content = "width = device-width">
+   <!-- Apple-specific PWA meta tags -->
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+   <meta name="format-detection" content="telephone=no">
+
+   <!-- Apple touch icons -->
+   <link rel="apple-touch-icon" sizes="180x180" href="icon512_maskable.png">
+   <link rel="apple-touch-icon" sizes="152x152" href="icon512_maskable.png">
+   <link rel="apple-touch-icon" sizes="167x167" href="icon512_maskable.png">
+
+   <!-- Apple startup images (optional) -->
+   <link rel="apple-touch-startup-image" href="icon512_maskable.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+   <link rel="apple-touch-startup-image" href="icon512_maskable.png" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)">
+   <!-- Add more startup images as needed -->
 
     <meta name="theme-color" content="#ffffff">
 </head> 
